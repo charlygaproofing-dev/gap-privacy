@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="supported-color-schemes" content="light">
+<title>GAP Roofing &amp; Construction — Free Roof Inspection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --storm-900:#0B2A4A;
+    --storm-700:#123A63;
+    --sky-500:#3E7CB1;
+    --sky-300:#8FB8DD;
+    --cloud-50:#F5F8FB;
+    --amber-500:#F2A93B;
+    --amber-600:#DC8F1E;
+    --ink-900:#101822;
+    --ink-600:#4B5768;
+    --line:#D9E2EC;
+    --radius:14px;
+    --shadow-lg: 0 20px 45px -20px rgba(11,42,74,0.35);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth; color-scheme:light;}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    color:var(--ink-900);
+    background:var(--cloud-50);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .display{font-family:'Archivo Expanded',sans-serif;}
+  .mono{font-family:'JetBrains Mono',monospace; letter-spacing:0.02em;}
+  a{color:inherit;}
+  img,svg{display:block; max-width:100%;}
+  button{font:inherit; cursor:pointer; border:none;}
+  .wrap{max-width:520px; margin:0 auto; padding:0 22px;}
+
+  .lang-toggle{
+    position:absolute; top:18px; right:18px; z-index:3;
+    display:flex; align-items:center; gap:6px;
+    background:rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.24);
+    color:#fff;
+    font-size:12.5px; font-weight:700;
+    padding:8px 13px; border-radius:999px;
+    backdrop-filter:blur(4px);
+  }
+  .lang-toggle svg{width:14px; height:14px;}
+
+  .hero{
+    position:relative;
+    background:radial-gradient(120% 90% at 15% -10%, #1C4A78 0%, var(--storm-900) 55%, #071B31 100%);
+    color:#fff;
+    padding:44px 0 64px;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; left:0; right:0; bottom:0; height:120px;
+    -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 100' preserveAspectRatio='none'><path d='M0,100 L0,55 L60,55 L100,20 L140,55 L180,55 L220,15 L260,55 L300,55 L340,30 L400,55 L400,100 Z'/></svg>");
+    mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 100' preserveAspectRatio='none'><path d='M0,100 L0,55 L60,55 L100,20 L140,55 L180,55 L220,15 L260,55 L300,55 L340,30 L400,55 L400,100 Z'/></svg>");
+    -webkit-mask-size:100% 100%; mask-size:100% 100%;
+    background-color:#06192E;
+    opacity:0.9;
+  }
+  .radar{
+    position:absolute; top:-40px; right:-60px; width:260px; height:260px; pointer-events:none;
+  }
+  .radar span{
+    position:absolute; inset:0; border-radius:50%;
+    border:1.5px solid rgba(242,169,59,0.55);
+    animation: ping 3.6s cubic-bezier(.2,.6,.3,1) infinite;
+    opacity:0;
+  }
+  .radar span:nth-child(2){animation-delay:1.2s;}
+  .radar span:nth-child(3){animation-delay:2.4s;}
+  @keyframes ping{
+    0%{transform:scale(0.15); opacity:0;}
+    12%{opacity:0.9;}
+    100%{transform:scale(1); opacity:0;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .radar span{animation:none; opacity:0.25;}
+  }
+
+  .logo{
+    width:150px;
+    height:auto;
+    margin-bottom:18px;
+    position:relative; z-index:2;
+    filter:drop-shadow(0 6px 16px rgba(0,0,0,0.35));
+  }
+  .badge-row{
+    display:flex; align-items:center; gap:8px;
+    font-size:12.5px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase;
+    color:var(--amber-500);
+    margin-bottom:18px;
+    position:relative; z-index:2;
+  }
+  .badge-dot{width:7px; height:7px; border-radius:50%; background:var(--amber-500); box-shadow:0 0 0 4px rgba(242,169,59,0.22);}
+
+  h1{
+    font-size:clamp(30px, 8vw, 40px);
+    line-height:1.08;
+    font-weight:800;
+    position:relative; z-index:2;
+    max-width:12ch;
+  }
+  .hero p.sub{
+    margin-top:14px;
+    font-size:16.5px;
+    color:#C3DCF2;
+    max-width:34ch;
+    position:relative; z-index:2;
+  }
+
+  .hero-cta{
+    margin-top:26px;
+    display:inline-flex; align-items:center; gap:10px;
+    background:var(--amber-500);
+    color:var(--storm-900);
+    font-weight:700;
+    font-size:15.5px;
+    padding:15px 22px;
+    border-radius:999px;
+    box-shadow:var(--shadow-lg);
+    position:relative; z-index:2;
+  }
+  .hero-cta svg{width:18px; height:18px;}
+
+  .trust{
+    background:#fff;
+    border-bottom:1px solid var(--line);
+  }
+  .trust-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:14px 18px;
+    padding:20px 0;
+  }
+  .trust-item{
+    display:flex; align-items:flex-start; gap:8px;
+    font-size:12.8px; font-weight:600; color:var(--storm-700);
+  }
+  .trust-item .ring{
+    flex:0 0 auto; width:16px; height:16px; margin-top:1px;
+    border-radius:50%; border:2px solid var(--amber-500);
+    position:relative;
+  }
+  .trust-item .ring::after{
+    content:""; position:absolute; inset:4px; border-radius:50%; background:var(--amber-500);
+  }
+
+  .form-section{padding:38px 0 8px;}
+  .form-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:26px 22px 24px;
+    box-shadow:var(--shadow-lg);
+  }
+  .form-card h2{
+    font-size:20px; font-weight:800; color:var(--storm-900);
+    margin-bottom:4px;
+  }
+  .form-card .hint{
+    font-size:13.5px; color:var(--ink-600); margin-bottom:20px;
+  }
+  .field{margin-bottom:16px;}
+  .field label{
+    display:block; font-size:12.5px; font-weight:700; text-transform:uppercase;
+    letter-spacing:0.03em; color:var(--storm-700); margin-bottom:7px;
+  }
+  .field input{
+    width:100%; padding:14px 14px; font-size:16px;
+    border:1.5px solid var(--line); border-radius:10px;
+    background:var(--cloud-50); color:var(--ink-900);
+    transition:border-color .15s, background .15s;
+  }
+  .field input:focus{
+    outline:none; border-color:var(--sky-500); background:#fff;
+    box-shadow:0 0 0 3px rgba(62,124,177,0.18);
+  }
+  .field.error input{border-color:#D64545;}
+  .field .err-msg{display:none; font-size:12px; color:#D64545; margin-top:6px; font-weight:600;}
+  .field.error .err-msg{display:block;}
+
+  .submit-btn{
+    width:100%; padding:16px; margin-top:6px;
+    background:var(--storm-900); color:#fff;
+    font-weight:700; font-size:16px; border-radius:10px;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+  }
+  .submit-btn:active{background:var(--storm-700);}
+  .disclaimer{font-size:11.5px; color:var(--ink-600); text-align:center; margin-top:12px;}
+
+  .success-state{display:none; text-align:center; padding:14px 4px 6px;}
+  .success-state .ring-icon{
+    width:56px; height:56px; margin:0 auto 14px; border-radius:50%;
+    background:rgba(62,124,177,0.12); display:flex; align-items:center; justify-content:center;
+  }
+  .success-state h3{font-size:18px; color:var(--storm-900); margin-bottom:6px;}
+  .success-state p{font-size:13.5px; color:var(--ink-600);}
+
+  .steps{padding:46px 0 8px; background:var(--storm-900); margin-top:0;}
+  .steps h2{
+    font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em;
+    color:var(--amber-500); margin-bottom:22px;
+  }
+  .step{
+    display:flex; gap:14px; padding:16px 0;
+    border-top:1px solid rgba(255,255,255,0.12);
+  }
+  .step:last-child{border-bottom:1px solid rgba(255,255,255,0.12);}
+  .step-num{
+    flex:0 0 auto; width:30px; height:30px; border-radius:50%;
+    background:var(--amber-500); color:var(--storm-900);
+    font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .step-body h4{font-size:15px; font-weight:700; color:#fff; margin-bottom:3px;}
+  .step-body p{font-size:13.5px; color:var(--sky-300);}
+
+  .why{padding:44px 0 46px; background:var(--storm-900); margin-top:44px;}
+  .why h2{font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--amber-500); margin-bottom:18px;}
+  .why-list{list-style:none;}
+  .why-list li{
+    display:flex; gap:12px; align-items:flex-start;
+    padding:12px 0; font-size:14.5px; color:#fff; font-weight:500;
+    border-top:1px solid rgba(255,255,255,0.12);
+  }
+  .why-list li:first-child{border-top:none;}
+  .why-list .ring{
+    flex:0 0 auto; width:18px; height:18px; margin-top:2px;
+    border-radius:50%; border:2px solid var(--amber-500); position:relative;
+  }
+  .why-list .ring::after{content:""; position:absolute; inset:4.5px; border-radius:50%; background:var(--amber-500);}
+
+  footer{
+    margin-top:48px; padding:30px 0 40px;
+    background:var(--storm-900); color:var(--sky-300);
+  }
+  footer .logo-sm{width:76px; height:auto; margin-bottom:14px; opacity:0.92;}
+  footer .company{font-size:15px; font-weight:800; color:#fff; margin-bottom:4px;}
+  footer .meta{font-size:12.5px; color:var(--sky-300); margin-bottom:18px;}
+  .call-btn{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.16);
+    color:#fff; font-weight:700; font-size:15px; padding:14px; border-radius:10px;
+  }
+  .call-btn svg{width:16px; height:16px;}
+  footer .fine{font-size:11px; color:rgba(143,184,221,0.7); margin-top:16px; text-align:center;}
+</style>
+</head>
+<body>
+
+  <section class="hero">
+    <button class="lang-toggle" id="langToggle" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8l6 6M4 14l6-6 2-3M2 5h12M7 2h1M22 22l-5-10-5 10M14 18h6"/></svg>
+      <span id="langToggleLabel">Español</span>
+    </button>
+    <div class="radar"><span></span><span></span><span></span></div>
+    <div class="wrap">
+      <img class="logo" src="logo.png" alt="GAP Roofing & Construction logo">
+      <div class="badge-row"><span class="badge-dot"></span> <span data-i18n="badge">Free inspection · San Antonio, TX</span></div>
+      <h1 class="display" data-i18n="h1">Did hail or wind damage your roof?</h1>
+      <p class="sub" data-i18n="sub">We'll check it out at no cost and tell you exactly what we find — no obligation to hire us.</p>
+      <a href="#form" class="hero-cta">
+        <span data-i18n="heroCta">Request a free inspection</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <section class="trust">
+    <div class="wrap trust-grid">
+      <div class="trust-item"><span class="ring"></span> GAF Certified™</div>
+      <div class="trust-item"><span class="ring"></span> <span data-i18n="trust2">Contractor #1294493</span></div>
+      <div class="trust-item"><span class="ring"></span> <span data-i18n="trust3">We work directly with your insurance company</span></div>
+      <div class="trust-item"><span class="ring"></span> <span data-i18n="trust4">Local to San Antonio</span></div>
+    </div>
+  </section>
+
+  <section class="form-section" id="form">
+    <div class="wrap">
+      <div class="form-card">
+
+        <form id="leadForm" novalidate>
+          <h2 class="display" data-i18n="formTitle">Schedule your inspection</h2>
+          <p class="hint" data-i18n="formHint">Fill in your details and we'll contact you within 24 hours.</p>
+
+          <div class="field" id="field-nombre">
+            <label for="nombre" data-i18n="labelName">Full name</label>
+            <input id="nombre" name="nombre" type="text" autocomplete="name" data-i18n-placeholder="phName" placeholder="John Smith">
+            <div class="err-msg" data-i18n="errName">Enter your full name.</div>
+          </div>
+
+          <div class="field" id="field-direccion">
+            <label for="direccion" data-i18n="labelAddress">Property address</label>
+            <input id="direccion" name="direccion" type="text" autocomplete="street-address" data-i18n-placeholder="phAddress" placeholder="Street, number, city">
+            <div class="err-msg" data-i18n="errAddress">Enter the address where the roof is.</div>
+          </div>
+
+          <div class="field" id="field-telefono">
+            <label for="telefono" data-i18n="labelPhone">Phone</label>
+            <input id="telefono" name="telefono" type="tel" autocomplete="tel" placeholder="(210) 000-0000">
+            <div class="err-msg" data-i18n="errPhone">Enter a valid 10-digit phone number.</div>
+          </div>
+
+          <button type="submit" class="submit-btn" id="submitBtn">
+            <span data-i18n="submitBtn">Request free inspection</span>
+          </button>
+          <p class="disclaimer" data-i18n="disclaimer">We don't share your information. No cost, no obligation.</p>
+          <p class="disclaimer" data-i18n="tcpa">By submitting, you agree to receive calls and texts from GAP Roofing about your inspection. Msg &amp; data rates may apply. See our <a href="https://charlygaproofing-dev.github.io/gap-privacy/" target="_blank" rel="noopener" style="text-decoration:underline;">Privacy Policy</a>.</p>
+        </form>
+
+        <div class="success-state" id="successState">
+          <div class="ring-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#3E7CB1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          </div>
+          <h3 class="display" data-i18n="successTitle">Got it, we received your info!</h3>
+          <p data-i18n="successBody">We'll call you within 24 hours to schedule your free inspection.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="steps">
+    <div class="wrap">
+      <h2 data-i18n="stepsTitle">How it works</h2>
+
+      <div class="step">
+        <div class="step-num mono">01</div>
+        <div class="step-body">
+          <h4 data-i18n="step1Title">Fill in your details</h4>
+          <p data-i18n="step1Body">Name, address and phone. Takes less than a minute.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num mono">02</div>
+        <div class="step-body">
+          <h4 data-i18n="step2Title">We schedule your inspection</h4>
+          <p data-i18n="step2Body">Usually within 24–48 hours, at a time that works for you.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num mono">03</div>
+        <div class="step-body">
+          <h4 data-i18n="step3Title">We deliver your report</h4>
+          <p data-i18n="step3Body">Photos of the damage and next steps, including the insurance process if it applies.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="why">
+    <div class="wrap">
+      <h2 data-i18n="whyTitle">Why GAP Roofing</h2>
+      <ul class="why-list">
+        <li><span class="ring"></span> <span data-i18n="why1">GAF Certified — trained and factory-backed by North America's largest roofing manufacturer.</span></li>
+        <li><span class="ring"></span> <span data-i18n="why2">We document the damage and coordinate directly with your insurance company throughout the process.</span></li>
+        <li><span class="ring"></span> <span data-i18n="why3">Materials and labor backed by a written warranty.</span></li>
+        <li><span class="ring"></span> <span data-i18n="why4">Locally owned in San Antonio — we respond fast.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <img class="logo-sm" src="logo.png" alt="GAP Roofing logo">
+      <div class="company display">GAP Roofing &amp; Construction LLC</div>
+      <div class="meta">San Antonio, TX · GAF Contractor ID 1294493</div>
+      <a href="tel:+12109964775" class="call-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        (210) 996-4775
+      </a>
+      <p class="fine" data-i18n="footerFine">This site is not an insurance claims processor. The inspection is free and with no obligation.</p>
+    </div>
+  </footer>
+
+<script>
+(function(){
+  var translations = {
+    en: {
+      badge: "Free inspection · San Antonio, TX",
+      h1: "Did hail or wind damage your roof?",
+      sub: "We'll check it out at no cost and tell you exactly what we find — no obligation to hire us.",
+      heroCta: "Request a free inspection",
+      trust2: "Contractor #1294493",
+      trust3: "We work directly with your insurance company",
+      trust4: "Local to San Antonio",
+      formTitle: "Schedule your inspection",
+      formHint: "Fill in your details and we'll contact you within 24 hours.",
+      labelName: "Full name",
+      labelAddress: "Property address",
+      labelPhone: "Phone",
+      phName: "John Smith",
+      phAddress: "Street, number, city",
+      errName: "Enter your full name.",
+      errAddress: "Enter the address where the roof is.",
+      errPhone: "Enter a valid 10-digit phone number.",
+      submitBtn: "Request free inspection",
+      submitBtnSending: "Sending…",
+      disclaimer: "We don't share your information. No cost, no obligation.",
+      tcpa: "By submitting, you agree to receive calls and texts from GAP Roofing about your inspection. Msg &amp; data rates may apply. See our <a href=\"https://charlygaproofing-dev.github.io/gap-privacy/\" target=\"_blank\" rel=\"noopener\" style=\"text-decoration:underline;\">Privacy Policy</a>.",
+      successTitle: "Got it, we received your info!",
+      successBody: "We'll call you within 24 hours to schedule your free inspection.",
+      stepsTitle: "How it works",
+      step1Title: "Fill in your details",
+      step1Body: "Name, address and phone. Takes less than a minute.",
+      step2Title: "We schedule your inspection",
+      step2Body: "Usually within 24–48 hours, at a time that works for you.",
+      step3Title: "We deliver your report",
+      step3Body: "Photos of the damage and next steps, including the insurance process if it applies.",
+      whyTitle: "Why GAP Roofing",
+      why1: "GAF Certified — trained and factory-backed by North America's largest roofing manufacturer.",
+      why2: "We document the damage and coordinate directly with your insurance company throughout the process.",
+      why3: "Materials and labor backed by a written warranty.",
+      why4: "Locally owned in San Antonio — we respond fast.",
+      footerFine: "This site is not an insurance claims processor. The inspection is free and with no obligation.",
+      toggleLabel: "Español"
+    },
+    es: {
+      badge: "Inspección gratis · San Antonio, TX",
+      h1: "¿Granizo o viento dañaron tu techo?",
+      sub: "Te lo revisamos sin costo y te decimos exactamente qué encontramos — sin compromiso de contratar.",
+      heroCta: "Solicitar inspección gratis",
+      trust2: "Contratista #1294493",
+      trust3: "Trabajamos directo con tu aseguradora",
+      trust4: "Locales en San Antonio",
+      formTitle: "Agenda tu inspección",
+      formHint: "Llena tus datos y te contactamos en menos de 24 horas.",
+      labelName: "Nombre completo",
+      labelAddress: "Dirección de la propiedad",
+      labelPhone: "Teléfono",
+      phName: "Juan Pérez",
+      phAddress: "Calle, número, colonia",
+      errName: "Escribe tu nombre completo.",
+      errAddress: "Escribe la dirección donde está el techo.",
+      errPhone: "Escribe un teléfono válido a 10 dígitos.",
+      submitBtn: "Solicitar inspección gratis",
+      submitBtnSending: "Enviando…",
+      disclaimer: "No compartimos tu información. Sin costo, sin compromiso.",
+      tcpa: "Al enviar, aceptas recibir llamadas y mensajes de texto de GAP Roofing sobre tu inspección. Pueden aplicar tarifas de mensajes y datos. Consulta nuestro <a href=\"https://charlygaproofing-dev.github.io/gap-privacy/\" target=\"_blank\" rel=\"noopener\" style=\"text-decoration:underline;\">Aviso de Privacidad</a>.",
+      successTitle: "¡Listo, recibimos tus datos!",
+      successBody: "Te llamamos en menos de 24 horas para agendar tu inspección gratis.",
+      stepsTitle: "Así de simple",
+      step1Title: "Llenas tus datos",
+      step1Body: "Nombre, dirección y teléfono. Toma menos de un minuto.",
+      step2Title: "Agendamos tu inspección",
+      step2Body: "Normalmente en 24–48 horas, a la hora que te acomode.",
+      step3Title: "Te entregamos el reporte",
+      step3Body: "Fotos del daño y el plan de acción, incluyendo el proceso con tu aseguradora si aplica.",
+      whyTitle: "Por qué GAP Roofing",
+      why1: "Certificados GAF — capacitados y respaldados por el fabricante de techos más grande de Norteamérica.",
+      why2: "Documentamos el daño y coordinamos directamente con tu aseguradora durante todo el proceso.",
+      why3: "Materiales y mano de obra con garantía por escrito.",
+      why4: "Somos locales de San Antonio — respondemos rápido.",
+      footerFine: "Este sitio no es un procesador de reclamos de seguro. La inspección es gratuita y sin compromiso.",
+      toggleLabel: "English"
+    }
+  };
+
+  var currentLang = 'en';
+  var toggleBtn = document.getElementById('langToggle');
+  var toggleLabel = document.getElementById('langToggleLabel');
+
+  function applyLang(lang){
+    var dict = translations[lang];
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var key = el.getAttribute('data-i18n');
+      if(dict[key] !== undefined) el.innerHTML = dict[key];
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){
+      var key = el.getAttribute('data-i18n-placeholder');
+      if(dict[key] !== undefined) el.placeholder = dict[key];
+    });
+    toggleLabel.textContent = dict.toggleLabel;
+    document.documentElement.lang = lang;
+    currentLang = lang;
+  }
+
+  toggleBtn.addEventListener('click', function(){
+    applyLang(currentLang === 'en' ? 'es' : 'en');
+  });
+
+  applyLang('en');
+
+  var form = document.getElementById('leadForm');
+  var successState = document.getElementById('successState');
+  var submitBtn = document.getElementById('submitBtn');
+  var submitBtnSpan = submitBtn.querySelector('span');
+
+  var ENDPOINT_URL = "PASTE_YOUR_APPS_SCRIPT_URL_HERE";
+
+  function validate(){
+    var ok = true;
+    var nombre = document.getElementById('nombre');
+    var direccion = document.getElementById('direccion');
+    var telefono = document.getElementById('telefono');
+
+    toggleError('field-nombre', nombre.value.trim().length < 3);
+    toggleError('field-direccion', direccion.value.trim().length < 5);
+    var digits = telefono.value.replace(/\D/g,'');
+    toggleError('field-telefono', digits.length < 10);
+
+    ['field-nombre','field-direccion','field-telefono'].forEach(function(id){
+      if(document.getElementById(id).classList.contains('error')) ok = false;
+    });
+    return ok;
+  }
+
+  function toggleError(fieldId, hasError){
+    var el = document.getElementById(fieldId);
+    el.classList.toggle('error', hasError);
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(!validate()) return;
+
+    var payload = {
+      nombre: document.getElementById('nombre').value.trim(),
+      direccion: document.getElementById('direccion').value.trim(),
+      telefono: document.getElementById('telefono').value.trim(),
+      idioma: currentLang,
+      fuente: 'landing-qr',
+      fecha: new Date().toISOString()
+    };
+
+    submitBtnSpan.textContent = translations[currentLang].submitBtnSending;
+
+    if(ENDPOINT_URL.indexOf('PASTE_YOUR') === -1){
+      fetch(ENDPOINT_URL, {
+        method: 'POST',
+        headers: {'Content-Type':'text/plain;charset=utf-8'},
+        body: JSON.stringify(payload)
+      }).then(function(){
+        showSuccess();
+      }).catch(function(){
+        showSuccess();
+      });
+    } else {
+      setTimeout(showSuccess, 500);
+    }
+  });
+
+  function showSuccess(){
+    form.style.display = 'none';
+    successState.style.display = 'block';
+  }
+})();
+</script>
+
+</body>
+</html>
